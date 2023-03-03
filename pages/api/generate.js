@@ -1,13 +1,22 @@
 import { Configuration, OpenAIApi } from "openai";
+import { encrypt, decrypt} from "./crypto"
 
 const { OPENAI_ORGANIZATION, OPENAI_API_KEY } = process.env;
+
 const configuration = new Configuration({
-  organization: OPENAI_ORGANIZATION,
-  apiKey: OPENAI_API_KEY,
+  organization: decrypt(OPENAI_ORGANIZATION),
+  apiKey: decrypt(OPENAI_API_KEY),
 });
+
+
 const openai = new OpenAIApi(configuration);
 
+
 export default async function (req, res) {
+  console.log('encrypt data OPENAI_API_KEY:', decrypt(OPENAI_API_KEY))
+
+  console.log('encrypt data OPENAI_ORGANIZATION:', decrypt(OPENAI_ORGANIZATION))
+  
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
