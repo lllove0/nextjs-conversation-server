@@ -16,6 +16,7 @@ export default function Home() {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
+					"Accept": "application/json, text/plain, */*",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ question: questionInput }),
